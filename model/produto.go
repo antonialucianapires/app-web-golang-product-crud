@@ -1,6 +1,8 @@
 package model
 
 import (
+	"log"
+	"strconv"
 	"time"
 
 	"app-web-golang-product-crud/database"
@@ -35,4 +37,27 @@ func BuscarProdutos() []Produto {
 		produtos = append(produtos, p)
 	}
 	return produtos
+}
+
+func InserirProduto(nome, descricao, preco, quantidade string) {
+    precoConvertido, err := strconv.ParseFloat(preco, 64)
+    if err != nil {
+        log.Println("Erro na conversão do preço:", err)
+    }
+
+    quantidadeConvertida, err := strconv.Atoi(quantidade)
+    if err != nil {
+        log.Println("Erro na conversão da quantidade:", err)
+    }
+
+    db := database.ConectaDB()
+    defer db.Close()
+
+    insertProduto, err := db.Prepare("insert into produtos(nome, descricao, preco, quantidade, data_criacao) values($1, $2, $3, $4, $5)")
+    if err != nil {
+        panic(err.Error())
+    }
+    defer insertProduto.Close()
+
+    insertProduto.Exec(nome, descricao, precoConvertido, quantidadeConvertida, time.Now())
 }
