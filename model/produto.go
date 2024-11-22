@@ -61,3 +61,16 @@ func InserirProduto(nome, descricao, preco, quantidade string) {
 
     insertProduto.Exec(nome, descricao, precoConvertido, quantidadeConvertida, time.Now())
 }
+
+func DeletaProduto (id string) {
+	db := database.ConectaDB()
+	defer db.Close()
+
+	deleteProduto, err := db.Prepare("delete from produtos where id=$1")
+	if err != nil {
+		panic(err.Error())
+	}
+	defer deleteProduto.Close()
+
+	deleteProduto.Exec(id)
+}

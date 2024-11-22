@@ -1,12 +1,6 @@
 {{define "index"}}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Produtos- Dashboard</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-</head>
+
+{{template "_head"}}
 <body class="bg-gradient-to-r from-purple-500 via-pink-500 to-red-500 font-sans leading-normal tracking-normal">
     <div class="container mx-auto p-6 bg-white shadow-lg rounded-lg mt-4">
         <h1 class="text-4xl font-bold mb-6 text-center text-gray-800">Gestão de Produtos</h1>
@@ -35,8 +29,8 @@
                     <td class="border border-gray-200 px-4 py-3">{{printf "%.2f" .Preco}}</td>
                     <td class="border border-gray-200 px-4 py-3">{{.Quantidade}}</td>
                     <td class="border border-gray-200 px-4 py-3 text-center">
-                        <button class="bg-green-600 hover:bg-green-800 text-white font-semibold py-1 px-3 rounded shadow-sm">Editar</button>
-                        <button class="bg-red-600 hover:bg-red-800 text-white font-semibold py-1 px-3 rounded shadow-sm">Excluir</button>
+                        <a class="bg-green-600 hover:bg-green-800 text-white font-semibold py-1 px-3 rounded shadow-sm" >Editar</a>
+                        <a class="bg-red-600 hover:bg-red-800 text-white font-semibold py-1 px-3 rounded shadow-sm" href="/delete?id={{.Id}}">Excluir</a>
                     </td>
                 </tr>
                 {{end}}
