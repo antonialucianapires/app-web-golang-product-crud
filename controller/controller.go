@@ -34,3 +34,23 @@ func Delete(w http.ResponseWriter, r *http.Request) {
 	model.DeletaProduto(id)
 	http.Redirect(w, r, "/", 301)
 }
+
+func Edit(w http.ResponseWriter, r *http.Request) {
+    id := r.URL.Query().Get("id")
+    produto := model.BuscarProdutoPorID(id)
+    temp.ExecuteTemplate(w, "edit", produto)
+}
+
+func Update(w http.ResponseWriter, r *http.Request) {
+    if r.Method == "POST" {
+        id := r.FormValue("id")
+        nome := r.FormValue("nome")
+        descricao := r.FormValue("descricao")
+        preco := r.FormValue("preco")
+        quantidade := r.FormValue("quantidade")
+        dataCriacao := r.FormValue("data_criacao") // Supondo que você também esteja enviando a data de criação
+
+        model.AtualizaProduto(id, nome, descricao, preco, quantidade, dataCriacao)
+    }
+    http.Redirect(w, r, "/", 301)
+}
